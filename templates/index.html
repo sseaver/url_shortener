@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Your one stop shop for shortening long URLs</h1>
+<h5>Logged in as {{ object.user }}</h5>
+{% for object in object_list %}
+<div class="panel panel-default">
+  <div class="panel-body">
+    <a href="{% url 'bookmark_view' object.id %}"><h3>{{ object }}</h3></a>
+  </div>
+</div>
+{% endfor %}
+{% endblock %}

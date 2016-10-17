@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1></h1>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <a href="{{object.link}}"><h3>{{ object.title }}</h3></a>
+    {{ object.click_count }}
+  </div>
+  <div class="panel-body">
+    {{ object.description }}<br>
+    <a href="{% url 'link_view' object.random_id %}">Your new link</a>
+  </div>
+  <div class="panel-footer">
+    {{ object.created }}
+  </div>
+</div>
+{% endblock %}
