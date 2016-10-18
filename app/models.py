@@ -10,6 +10,7 @@ class Bookmark(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     random_id = models.CharField(max_length=10)
     link = models.URLField()
+    public = models.BooleanField()
 
     class Meta:
         ordering = ("-created",)

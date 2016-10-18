@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{{ request.user }}'s private bookmarks</h1>
+{% for object in object_list %}
+{% if request.user == object.user %}
+{% if not object.public %}
+<div class="panel panel-default">
+  <div class="panel-body">
+    <a href="{% url 'bookmark_view' object.id %}"><h3>{{ object }}</h3></a>
+  </div>
+</div>
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endblock %}

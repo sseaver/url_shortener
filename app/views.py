@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from app.models import Bookmark, Click
 from django.contrib.auth.models import User
-from django.views.generic import View, ListView, CreateView, DetailView
+from django.views.generic import View, ListView, CreateView, DetailView, UpdateView
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseRedirect
 from django.utils.crypto import get_random_string
@@ -18,7 +18,7 @@ class IndexView(ListView):
 class BookmarkCreateView(CreateView):
     model = Bookmark
     success_url = "/"
-    fields = ('title', 'description', 'link')
+    fields = ('title', 'description', 'link', 'public')
 
     def form_valid(self, form):
         instance = form.save(commit=False)
@@ -28,6 +28,17 @@ class BookmarkCreateView(CreateView):
 
 
 class BookmarkView(DetailView):
+    model = Bookmark
+
+
+class BookmarkUpdateView(UpdateView):
+    model = Bookmark
+    success_url = "/"
+    fields = ("title", "description", "link", 'public')
+
+
+class PrivateBookmarkView(ListView):
+    template_name = "private_bookmarks.html"
     model = Bookmark
 
 
@@ -41,14 +52,3 @@ class UserCreateView(CreateView):
     model = User
     form_class = UserCreationForm
     success_url = "/"
-
-
-class ClickView(CreateView):
-    model = Click
-    success_url = "/"
-    fields = ("clicked",)
-
-    def form_valid(self, form):
-        Click.objects.get(bookmark=self.request.bookmark)
-        instance = form.save(commit=False)
-        instance.bookmark = Bookmark.objects.get(pk=self.kwargs["pk"])

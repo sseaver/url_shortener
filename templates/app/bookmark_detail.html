@@ -12,6 +12,11 @@
   </div>
   <div class="panel-footer">
     {{ object.created }}
+    {% if request.user == object.user %}
+    <div class="pull-right">
+      <a href="{% url 'bookmark_update_view' object.id %}">Update Bookmark</a>
+    </div>
+    {% endif %}
   </div>
 </div>
 {% endblock %}
