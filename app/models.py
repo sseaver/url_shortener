@@ -16,7 +16,7 @@ class Bookmark(models.Model):
 
     @property
     def click_count(self):
-        return sum(click_obj.count for click_obj in self.click_set.all())
+        return self.click_set.count()
 
     def __str__(self):
         return self.title
@@ -25,10 +25,3 @@ class Bookmark(models.Model):
 class Click(models.Model):
     bookmark = models.ForeignKey(Bookmark)
     visited = models.DateTimeField(auto_now_add=True)
-    clicked = models.BooleanField()
-
-    @property
-    def click_count(self):
-        if Click.clicked:
-            return 1
-        return 0

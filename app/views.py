@@ -33,6 +33,7 @@ class BookmarkView(DetailView):
 
 def link_view(request, short_url):
     reroute = Bookmark.objects.get(random_id=short_url)
+    Click.objects.create(bookmark=reroute)
     return HttpResponseRedirect(reroute.link)
 
 
@@ -40,3 +41,14 @@ class UserCreateView(CreateView):
     model = User
     form_class = UserCreationForm
     success_url = "/"
+
+
+class ClickView(CreateView):
+    model = Click
+    success_url = "/"
+    fields = ("clicked",)
+
+    def form_valid(self, form):
+        Click.objects.get(bookmark=self.request.bookmark)
+        instance = form.save(commit=False)
+        instance.bookmark = Bookmark.objects.get(pk=self.kwargs["pk"])
