@@ -21,6 +21,7 @@
 {% endif %}
 {% endfor %}
   </div>
+  {% if request.user.is_authenticated %}
   <div class="col-md-4">
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -41,6 +42,7 @@
     </div>
 
   </div>
+  {% endif %}
 
 </div>
 
